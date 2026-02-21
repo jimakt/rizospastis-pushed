@@ -26,22 +26,29 @@ jobs:
       - name: Run script
         run: python rizospastis.py
 
-      - name: Generate RSS Feed
+     - name: Generate RSS Feed
         run: |
           DATE=$(date -R)
           REPO_URL="https://raw.githubusercontent.com/${{ github.repository }}/main"
+          # Υπολογισμός μεγέθους αρχείου (το απαιτεί το enclosure)
+          FILE_SIZE=$(stat -c%s "rizospastis_current.pdf")
+          
           cat <<EOF > rss.xml
           <?xml version="1.0" encoding="UTF-8" ?>
-          <rss version="2.0">
+          <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
           <channel>
-            <title>Rizospastis Daily</title>
+            <title>Rizospastis Daily PDF</title>
             <link>${REPO_URL}/rizospastis_current.pdf</link>
-            <description>Daily PDF of Rizospastis</description>
+            <description>Απευθείας λήψη του σημερινού Ριζοσπάστη</description>
+            <language>el</language>
+            <lastBuildDate>${DATE}</lastBuildDate>
             <item>
-              <title>Rizospastis - $(date +'%Y-%m-%d')</title>
+              <title>Ριζοσπάστης - $(date +'%d/%m/%Y')</title>
               <link>${REPO_URL}/rizospastis_current.pdf</link>
-              <guid isPermaLink="false">$(date +'%Y-%m-%d')</guid>
+              <description>Κάντε κλικ για λήψη της εφημερίδας σε μορφή PDF.</description>
+              <guid isPermaLink="false">rizospastis-$(date +'%Y-%m-%d')</guid>
               <pubDate>${DATE}</pubDate>
+              <enclosure url="${REPO_URL}/rizospastis_current.pdf" length="${FILE_SIZE}" type="application/pdf" />
             </item>
           </channel>
           </rss>
