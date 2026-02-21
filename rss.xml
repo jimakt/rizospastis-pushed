@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0">
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
 <channel>
-  <title>Rizospastis Daily</title>
+  <title>Rizospastis Daily PDF</title>
   <link>https://raw.githubusercontent.com/jimakt/rizospastis-pushed/main/rizospastis_current.pdf</link>
-  <description>Daily PDF of Rizospastis</description>
+  <description>Απευθείας λήψη του σημερινού Ριζοσπάστη</description>
+  <language>el</language>
+  <lastBuildDate>Sat, 21 Feb 2026 11:35:35 +0000</lastBuildDate>
   <item>
-    <title>Rizospastis - 2026-02-21</title>
+    <title>Ριζοσπάστης - 21/02/2026</title>
     <link>https://raw.githubusercontent.com/jimakt/rizospastis-pushed/main/rizospastis_current.pdf</link>
-    <guid isPermaLink="false">2026-02-21</guid>
-    <pubDate>Sat, 21 Feb 2026 10:25:47 +0000</pubDate>
+    <description>Κάντε κλικ για λήψη της εφημερίδας σε μορφή PDF.</description>
+    <guid isPermaLink="false">rizospastis-2026-02-21</guid>
+    <pubDate>Sat, 21 Feb 2026 11:35:35 +0000</pubDate>
+    <enclosure url="https://raw.githubusercontent.com/jimakt/rizospastis-pushed/main/rizospastis_current.pdf" length="11465781" type="application/pdf" />
   </item>
 </channel>
 </rss>
