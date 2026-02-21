@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="1.0">
+  <head>
+    <title>Rizospastis Subscriptions</title>
+  </head>
+  <body>
+    <outline text="Rizospastis Daily" 
+             title="Rizospastis Daily" 
+             type="rss" 
+             xmlUrl="https://raw.githubusercontent.com/jimakt/rizospastis-pushed/main/rss.xml" 
+             htmlUrl="https://github.com/jimakt/rizospastis-pushed"/>
+  </body>
+</opml>
