@@ -1,11 +1,10 @@
-name: Daily Rizospastis Download
+name: Daily Update
 
 on:
   schedule:
-    - cron: '20 5 * * *'  # 08:20 ώρα Ελλάδας
-  workflow_dispatch:      # Σου επιτρέπει να το τρέχεις χειροκίνητα για δοκιμή
+    - cron: '20 5 * * *'
+  workflow_dispatch:
 
-# Αυτό δίνει την άδεια στο Action να ανεβάζει αρχεία στο Repo σου
 permissions:
   contents: write
 
@@ -17,22 +16,15 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.9'
-
-      - name: Install dependencies
         run: pip install requests
 
       - name: Run script
         run: python rizospastis.py
 
-      - name: Commit and Push PDF
+      - name: Commit changes
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          # Προσθέτει μόνο τα νέα PDF αρχεία
-          git add *.pdf
-          # Αν δεν υπάρχουν αλλαγές, να μην βγάλει error
-          git commit -m "Daily PDF: $(date +'%Y-%m-%d')" || exit 0
+          git add rizospastis_current.pdf
+          git commit -m "Update PDF for $(date +'%Y-%m-%d')" || exit 0
           git push
