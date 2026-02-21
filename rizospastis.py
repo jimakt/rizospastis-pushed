@@ -13,8 +13,14 @@ print("--- Starting Execution ---")
 url = "https://sep.gr/wp-content/uploads/rizospastis_auto_replace/rizospastis_current.pdf"
 try:
     print(f"Downloading from: {url}")
-    response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=30)
+    # Εδώ κάνουμε το script να φαίνεται σαν κανονικός browser
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Referer": "https://sep.gr/"
+    }
+    response = requests.get(url, headers=headers, timeout=30)
     response.raise_for_status()
+    
     with open("rizospastis_current.pdf", "wb") as f:
         f.write(response.content)
     print("PDF downloaded successfully.")
