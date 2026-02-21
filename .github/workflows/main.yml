@@ -1,12 +1,9 @@
-name: Daily Update with RSS
+name: Push Rizospastis to Dropbox
 
 on:
   schedule:
-    - cron: '20 5 * * *'
-  workflow_dispatch:
-
-permissions:
-  contents: write
+    - cron: '20 5 * * *'  # 08:20 ώρα Ελλάδας
+  workflow_dispatch:      # Για να το τρέχεις χειροκίνητα
 
 jobs:
   build:
@@ -23,41 +20,7 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Run script
+      - name: Run script and Upload
+        env:
+          DROPBOX_TOKEN: ${{ secrets.DROPBOX_TOKEN }}
         run: python rizospastis.py
-
-      - name: Generate RSS Feed
-        run: |
-          DATE=$(date -R)
-          REPO_URL="https://raw.githubusercontent.com/${{ github.repository }}/main"
-          # Υπολογισμός μεγέθους αρχείου (το απαιτεί το enclosure)
-          FILE_SIZE=$(stat -c%s "rizospastis_current.pdf")
-          
-          cat <<EOF > rss.xml
-          <?xml version="1.0" encoding="UTF-8" ?>
-          <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-          <channel>
-            <title>Rizospastis Daily PDF</title>
-            <link>${REPO_URL}/rizospastis_current.pdf</link>
-            <description>Απευθείας λήψη του σημερινού Ριζοσπάστη</description>
-            <language>el</language>
-            <lastBuildDate>${DATE}</lastBuildDate>
-            <item>
-              <title>Ριζοσπάστης - $(date +'%d/%m/%Y')</title>
-              <link>${REPO_URL}/rizospastis_current.pdf</link>
-              <description>Κάντε κλικ για λήψη της εφημερίδας σε μορφή PDF.</description>
-              <guid isPermaLink="false">rizospastis-$(date +'%Y-%m-%d')</guid>
-              <pubDate>${DATE}</pubDate>
-              <enclosure url="${REPO_URL}/rizospastis_current.pdf" length="${FILE_SIZE}" type="application/pdf" />
-            </item>
-          </channel>
-          </rss>
-          EOF
-
-      - name: Commit and Push
-        run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "action@github.com"
-          git add rizospastis_current.pdf rss.xml
-          git commit -m "Update PDF and RSS for $(date +'%Y-%m-%d')" || exit 0
-          git push
