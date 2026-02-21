@@ -26,7 +26,7 @@ jobs:
       - name: Run script
         run: python rizospastis.py
 
-     - name: Generate RSS Feed
+      - name: Generate RSS Feed
         run: |
           DATE=$(date -R)
           REPO_URL="https://raw.githubusercontent.com/${{ github.repository }}/main"
