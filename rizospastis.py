@@ -1,6 +1,4 @@
 import requests
-from datetime import datetime
-import os
 
 url = "https://sep.gr/wp-content/uploads/rizospastis_auto_replace/rizospastis_current.pdf"
 headers = {
@@ -8,16 +6,14 @@ headers = {
     "Referer": "https://sep.gr/"
 }
 
-# Δημιουργία ονόματος με ημερομηνία
-date_str = datetime.now().strftime("%Y-%m-%d")
-filename = f"rizospastis_{date_str}.pdf"
+filename = "rizospastis_current.pdf" # Σταθερό όνομα για να γίνεται overwrite
 
-print(f"Downloading {filename}...")
-
+print("Downloading current edition...")
 response = requests.get(url, headers=headers)
+
 if response.status_code == 200:
     with open(filename, "wb") as f:
         f.write(response.content)
-    print("Done!")
+    print("Success: File updated.")
 else:
     print(f"Failed: {response.status_code}")
