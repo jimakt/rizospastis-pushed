@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+  <title>Rizospastis Daily</title>
+  <link>https://raw.githubusercontent.com/jimakt/rizospastis-pushed/main/rizospastis_current.pdf</link>
+  <description>Daily PDF of Rizospastis</description>
+  <item>
+    <title>Rizospastis - 2026-02-21</title>
+    <link>https://raw.githubusercontent.com/jimakt/rizospastis-pushed/main/rizospastis_current.pdf</link>
+    <guid isPermaLink="false">2026-02-21</guid>
+    <pubDate>Sat, 21 Feb 2026 10:25:47 +0000</pubDate>
+  </item>
+</channel>
+</rss>
