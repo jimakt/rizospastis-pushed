@@ -36,8 +36,11 @@ if response.status_code == 200:
             upload_res = requests.post(dbx_url, headers=dbx_headers, data=f)
         
         if upload_res.status_code == 200:
-            print("Success! PDF updated in Dropbox.")
+            result = upload_res.json()
+            print(f"Success! File saved at: {result.get('path_display')}")
         else:
-            print(f"Upload failed: {upload_res.text}")
+            print(f"Upload failed. Status: {upload_res.status_code}")
+            print(f"Response: {upload_res.text}")
+        
     else:
         print("Could not get access token.")
