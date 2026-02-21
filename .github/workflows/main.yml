@@ -1,4 +1,4 @@
-name: Daily Update
+name: Daily Update with RSS
 
 on:
   schedule:
@@ -16,15 +16,41 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
         run: pip install requests
 
       - name: Run script
         run: python rizospastis.py
 
-      - name: Commit changes
+      - name: Generate RSS Feed
+        run: |
+          DATE=$(date -R)
+          REPO_URL="https://raw.githubusercontent.com/${{ github.repository }}/main"
+          cat <<EOF > rss.xml
+          <?xml version="1.0" encoding="UTF-8" ?>
+          <rss version="2.0">
+          <channel>
+            <title>Rizospastis Daily</title>
+            <link>${REPO_URL}/rizospastis_current.pdf</link>
+            <description>Daily PDF of Rizospastis</description>
+            <item>
+              <title>Rizospastis - $(date +'%Y-%m-%d')</title>
+              <link>${REPO_URL}/rizospastis_current.pdf</link>
+              <guid isPermaLink="false">$(date +'%Y-%m-%d')</guid>
+              <pubDate>${DATE}</pubDate>
+            </item>
+          </channel>
+          </rss>
+          EOF
+
+      - name: Commit and Push
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          git add rizospastis_current.pdf
-          git commit -m "Update PDF for $(date +'%Y-%m-%d')" || exit 0
+          git add rizospastis_current.pdf rss.xml
+          git commit -m "Update PDF and RSS for $(date +'%Y-%m-%d')" || exit 0
           git push
